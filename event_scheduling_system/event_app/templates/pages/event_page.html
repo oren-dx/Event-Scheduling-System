@@ -1,0 +1,117 @@
+{% extends 'master/base.html' %}
+
+{% block title %}
+My Events
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h1>Events Page</h1>
+        <p>Manage All Events.</p>
+    </div>
+
+    <a href="{% url 'event_create' %}" class="btn btn-primary">Create Event</a>
+
+</div>
+
+
+<form method="GET" class="filter-form">
+
+    <label>Filter by Status:</label>
+
+    <select name="status">
+
+        <option value="">All Status</option>
+
+        <option
+            value="NotStarted"
+            {% if status == 'NotStarted' %}selected{% endif %}>
+            Not Started
+        </option>
+
+        <option
+            value="InProgress"
+            {% if status == 'InProgress' %}selected{% endif %}>
+            In Progress
+        </option>
+
+        <option
+            value="Completed"
+            {% if status == 'Completed' %}selected{% endif %}>
+            Completed
+        </option>
+
+    </select>
+
+    <button type="submit">Filter</button>
+
+</form>
+
+
+<div class="table-container">
+
+<table class="table table-striped">
+
+    <thead>
+
+        <tr>
+
+            <th>Title</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Location</th>
+            <th>Actions</th>
+
+        </tr>
+
+    </thead>
+
+
+    <tbody>
+
+        {% for event in events %}
+
+        <tr>
+
+            <td>{{ event.event_title }}</td>
+
+            <td>{{ event.event_type }}</td>
+
+            <td>{{ event.event_date }}</td>
+
+            <td> <span class="status">{{ event.get_status_display }}</span> </td>
+
+            <td>{{ event.location }}</td>
+
+            <td class="actions">
+
+                <a href="{% url 'event_update' event.id %}" class="btn btn-warning">Edit</a>
+
+                <a href="{% url 'event_delete' event.id %}" class="btn btn-danger">Delete</a>
+
+            </td>
+
+        </tr>
+
+        {% empty %}
+
+        <tr>
+
+            <td colspan="6"> No events found.</td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

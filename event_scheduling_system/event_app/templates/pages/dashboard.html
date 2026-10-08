@@ -1,0 +1,75 @@
+{% extends 'master/base.html' %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h1>Events List</h1>
+        <p>Browse all available events.</p>
+    </div>
+
+</div>
+
+
+<form method="GET" class="search-form">
+
+    <input
+        type="text"
+        name="search"
+        value="{{ search }}"
+        placeholder="Search by title, type or location...">
+
+    <button type="submit">Search</button>
+
+</form>
+
+
+<div class="event-grid">
+
+    {% for event in events %}
+
+    <div class="event-card">
+
+        <span class="event-type">
+            {{ event.event_type }}
+        </span>
+
+        <h2>{{ event.event_title }}</h2>
+
+        <p>
+            {{ event.event_description|truncatewords:20 }}
+        </p>
+
+        <div class="event-info">
+
+            <p>
+                <strong>Date:</strong>
+                {{ event.event_date }}
+            </p>
+
+            <p>
+                <strong>Location:</strong>
+                {{ event.location }}
+            </p>
+
+        </div>
+
+        <a href="{% url 'event_details' event.id %}" class="btn btn-primary">View Details</a>
+
+    </div>
+
+    {% empty %}
+
+        <div class="empty">No events found.</div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

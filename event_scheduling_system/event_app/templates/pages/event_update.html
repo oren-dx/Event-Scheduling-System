@@ -1,0 +1,168 @@
+{% extends 'master/base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+<div class="row justify-content-center">
+
+    <div class="col-md-8">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Update Event</h4>
+            </div>
+
+            <div class="card-body">
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+
+                        <label for="event_title" class="form-label">Event Title</label>
+
+                        <input
+                            type="text"
+                            name="event_title"
+                            id="event_title"
+                            class="form-control"
+                            value="{{ event_data.event_title }}"
+                            placeholder="Enter event title"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label for="event_type" class="form-label">Event Type</label>
+
+                        <select
+                            name="event_type"
+                            id="event_type"
+                            class="form-select"
+                            required>
+
+                            <option value="Conference"
+                                {% if event_data.event_type == 'Conference' %}
+                                    selected
+                                {% endif %}>
+                                Conference
+                            </option>
+
+                            <option value="Concert"
+                                {% if event_data.event_type == 'Concert' %}
+                                    selected
+                                {% endif %}>
+                                Concert
+                            </option>
+
+                            <option value="Wedding"
+                                {% if event_data.event_type == 'Wedding' %}
+                                    selected
+                                {% endif %}>
+                                Wedding
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label for="event_description" class="form-label">Event Description</label>
+
+                        <textarea
+                            name="event_description"
+                            id="event_description"
+                            class="form-control"
+                            rows="4"
+                            placeholder="Enter event description"
+                            required>{{ event_data.event_description }}</textarea>
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label for="event_date" class="form-label">Event Date</label>
+
+                        <input
+                            type="date"
+                            name="event_date"
+                            id="event_date"
+                            class="form-control"
+                            value="{{ event_data.event_date|date:'Y-m-d' }}"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label for="status" class="form-label">Event Status</label>
+
+                        <select
+                            name="status"
+                            id="status"
+                            class="form-select"
+                            required>
+
+                            <option value="NotStarted"
+                                {% if event_data.status == 'NotStarted' %}
+                                    selected
+                                {% endif %}>
+                                Not Started
+                            </option>
+
+                            <option value="InProgress"
+                                {% if event_data.status == 'InProgress' %}
+                                    selected
+                                {% endif %}>
+                                In Progress
+                            </option>
+
+                            <option value="Completed"
+                                {% if event_data.status == 'Completed' %}
+                                    selected
+                                {% endif %}>
+                                Completed
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label for="location" class="form-label">Location</label>
+
+                        <input
+                            type="text"
+                            name="location"
+                            id="location"
+                            class="form-control"
+                            value="{{ event_data.location }}"
+                            placeholder="Enter event location"
+                            required>
+                    </div>
+
+                    <div class="d-flex gap-2">
+
+                        <button type="submit" class="btn btn-primary">Update Event</button>
+
+                        <a href="{% url 'event_page' %}" class="btn btn-secondary">Cancel</a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+
+{% endblock %}
